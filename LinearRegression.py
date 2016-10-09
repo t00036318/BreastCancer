@@ -13,7 +13,9 @@ def featureNormalize(X):
             mean[j]+=X[i,j]
         mean[j]/=m
         std.append(np.amax(X[:,j])-np.amin(X[:,j]))
-        return X
+        for k in range(m):
+            X[k,j]=(X[k,j]-mean[j])/std[j]
+    return X
 
 def main():
     f = open('r_wpbc.data', 'r')
@@ -46,7 +48,7 @@ def main():
             t2.append(element)
 
     tests_ds = x[t2,:]          #Matriz con datos de prueba (40% de los datos iniciales)
-
     training_ds=featureNormalize(training_ds) #Normalizar datos del conjunto de entrenamiento
+    
 
 main()
