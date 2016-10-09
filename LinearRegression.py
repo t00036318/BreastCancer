@@ -20,7 +20,7 @@ for fila in x:
     y.append(x[i,32])
     i += 1
 
-x = np.delete(x, 32, 1)     # Matriz x (entradas) es 194*32  (vector y eliminado de x)
+x = np.delete(x, 32, 1)     #Matriz x (entradas) es 194*32  (vector y eliminado de x)
 
 
 t = random.sample(range(194),116)
