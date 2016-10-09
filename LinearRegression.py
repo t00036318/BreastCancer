@@ -24,7 +24,5 @@ x = np.delete(x, 32, 1)     # Matriz x (entradas) es 194*32  (vector y eliminado
 
 
 t = random.sample(range(194),116)
-training_ds = x[t,:]
-print(training_ds)          #Matriz con datos de  entrenamiento (60% de los datos iniciales)
-
+training_ds = x[t,:]        #Matriz con datos de  entrenamiento (60% de los datos iniciales)
 
