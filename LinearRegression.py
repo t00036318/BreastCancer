@@ -12,6 +12,11 @@ for line in f.readlines():
     data.append(line)
 
 x = np.matrix(data)    #Matriz x (entradas) es 194*33
-
 print(x)
 
+y = []                 #Vector columna con salidas (Time)
+i=0
+for fila in x:
+    y.append(x[i,32])
+    i += 1
+print(y)
