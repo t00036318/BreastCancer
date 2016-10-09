@@ -11,12 +11,16 @@ for line in f.readlines():
     line = [float(i) for i in line]
     data.append(line)
 
-x = np.matrix(data)    #Matriz x (entradas) es 194*33
-print(x)
+x = np.matrix(data)         #Matriz x (entradas) es 194*33
 
-y = []                 #Vector columna con salidas (Time)
+y = []                      #Vector columna con salidas (Time)
 i=0
 for fila in x:
     y.append(x[i,32])
     i += 1
-print(y)
+
+x = np.delete(x, 32, 1)     # Matriz x (entradas) es 194*32  (vector y eliminado de x)
+
+
+
+
