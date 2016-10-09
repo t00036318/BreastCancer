@@ -6,8 +6,8 @@ data = []
 for line in f.readlines():
     line = line.strip()
     line = line.split(",'")
-    for element in line:
-        data.append(element)
+    data.append(line)
+
 
 x = np.matrix(data)    #Matriz x (entradas) es 194*33
 
