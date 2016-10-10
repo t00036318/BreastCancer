@@ -44,10 +44,17 @@ def Pseudoinverse(X):                            #Función que calcula la pseudo
     Xplus = Xinv.dot(Xt)
     return Xplus
 
-def Theta(Xplus, Y):                                 #Función que calcular el vector theta
+
+def Theta(Xplus, Y):                             #Función que calcular el vector theta
     th = Xplus.dot(Y)
     return th
 
+
+def training(th, X):
+    th = np.transpose(th)
+    X = np.transpose(X)
+    hx = th.dot(X)
+    return hx
 
 def main():
     f = open('r_wpbc.data', 'r')
@@ -76,6 +83,7 @@ def main():
     for i in range(116):
         y_training.append(x_training[i,32])
     y_training = np.transpose(np.matrix(y_training))        #Vector columna y de entrenamiento
+
     for i in range(78):
         y_test.append(x_test[i,32])               #Matriz y de pruebas
 
@@ -84,7 +92,8 @@ def main():
 
     Xp = Pseudoinverse(x_training)                #Pseudoinversa de x
     th = Theta(Xp, y_training)                    #Vector theta
-    print(th.shape)
+
+    hx = training(th, x_training)
 
 
 
