@@ -1,6 +1,6 @@
 import numpy as np
 import random
-import copy as c
+import matplotlib.pyplot as plt
 def featureNormalize(X):
 
     [m,n] = X.shape
@@ -18,8 +18,13 @@ def featureNormalize(X):
             X[k,j]=(X[k,j]-mean[j])/std[j]
     return X
 
+def computeCost(X,y,theta):
+    [m,n]= y.shape
+    J = (1/(2*m))*sum(np.power((X*theta-y),2))
+    return J
+
 def gradientDescent (X, y, theta, alpha, num_iters):
-    J_histor = []
+    J_histor = np.zeros((num_iters,1))
     [m,n] = X.shape         # m = numero de ejemplos de entrenamiento
     i=0
     theta_temp = []
@@ -29,10 +34,12 @@ def gradientDescent (X, y, theta, alpha, num_iters):
         error=h-y
         theta_temp = np.transpose(((alpha/m)*(np.transpose(error)*X)))
         theta = theta-theta_temp
-    return [theta_temp,J_histor]
+        J_histor [i] = computeCost(X,y,theta)
+    return [theta,J_histor]
 
 
 def main():
+
     f = open('r_wpbc.data', 'r')
 
     np.set_printoptions(suppress=True)
@@ -67,11 +74,11 @@ def main():
     theta = np.zeros((33,1))
     alpha = 0.09
     iterat = 400
-    temp = gradientDescent(training_ds,y_training,theta,alpha,iterat)
-    theta = np.copy(temp[0])
-    J = []
-    J = c.deepcopy(temp[1])
-    del temp[:]
+    [theta,J] = gradientDescent(training_ds,y_training,theta,alpha,iterat)
+    plt.plot(J)
+    plt.ylabel('Cost J')
+    plt.xlabel('Number of Iterations')
+    plt.show()
 
 
 main()
