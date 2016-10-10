@@ -20,20 +20,14 @@ def featureNormalize(X):
 
 def gradientDescent (X, y, theta, alpha, num_iters):
     J_histor = []
-    error = 0.0
     [m,n] = X.shape         # m = numero de ejemplos de entrenamiento
     i=0
     theta_temp = []
     j=0
     for i in range (num_iters):
-        for j in range (116):
-            h = np.dot(X[j,:],theta)
-            print (h)
-            error = h-y[j]
-        error/=116
-
-
-    return [theta,J_histor]
+        h = X*theta
+        error=h-y
+    return [theta_temp,J_histor]
 
 
 def main():
@@ -60,17 +54,11 @@ def main():
             t2.append(element)
 
     tests_ds = x[t2,:]          #Matriz con datos de prueba (40% de los datos iniciales)
-    y_training = []
-    y_test =[]
-    for i in range (116):
-        y_training.append(training_ds[i,32])
-    for i in range (78):
-        y_test.append(tests_ds[i,32])
+    y_training=training_ds[:,32]
+    y_test= tests_ds[:,32]
     x = np.delete(x,32,1)       #Matriz x (entradas) es 194*32  (vector y eliminado de x)
     training_ds = np.delete(training_ds,32,1)
     tests_ds = np.delete(tests_ds,32,1)
-
-
     training_ds=featureNormalize(training_ds) #Normalizar datos del conjunto de entrenamiento
     training_ds=np.concatenate((np.ones((116,1)),training_ds),axis=1)
     tests_ds = np.concatenate((np.ones((78,1)),tests_ds),axis=1)
