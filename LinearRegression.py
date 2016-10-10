@@ -37,6 +37,10 @@ def gradientDescent (X, y, theta, alpha, num_iters):
         J_histor [i] = computeCost(X,y,theta)
     return [theta,J_histor]
 
+def Pseudoinverse(X,Y):                            #Función que calcula la pseudoinversa de una matriz
+    Xplus=np.linalg.pinv(X)
+    th = Xplus.dot(Y)
+    return th
 
 def main():
 
@@ -75,6 +79,8 @@ def main():
     alpha = 0.09
     iterat = 400
     [theta,J] = gradientDescent(training_ds,y_training,theta,alpha,iterat)
+    theta2=Pseudoinverse(training_ds,y_training)
+
     plt.plot(J)
     plt.ylabel('Cost J')
     plt.xlabel('Number of Iterations')
