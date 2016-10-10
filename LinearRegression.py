@@ -20,17 +20,31 @@ def featureNormalize(X):
 
 def gradientDescent (X, y, theta, alpha, num_iters):
     J_histor = []
-    error = 0.0
     [m,n] = X.shape         # m = numero de ejemplos de entrenamiento
     i=0
-    theta_temp = []
+    error = np.zeros((m,1))
+    h=np.zeros((m,1))
+    theta_temp = theta
     j=0
+    i=0
+    k=0
+    """print ("tamaño de X ",X.shape)
+    print ("tamaño de theta ", theta.shape)
+    print ("tamaño de y ", y.shape)
+    print (y)"""
+
     for i in range (num_iters):
-        for j in range (116):
-            h = np.dot(X[j,:],theta)
-            print (h)
-            error = h-y[j]
-        error/=116
+        h = X*theta
+        error = h - y
+        theta_temp = np.transpose(((alpha/m)*(np.transpose(error)*X)))
+        theta = theta-theta_temp
+    """for i in range (num_iters):
+        for j in range (n):
+            for k in range(m):
+                #h = np.dot(X[j,:],theta)
+                h = X[j,:] * theta
+                print(h.shape)"""
+
 
 
     return [theta,J_histor]
@@ -60,12 +74,8 @@ def main():
             t2.append(element)
 
     tests_ds = x[t2,:]          #Matriz con datos de prueba (40% de los datos iniciales)
-    y_training = []
-    y_test =[]
-    for i in range (116):
-        y_training.append(training_ds[i,32])
-    for i in range (78):
-        y_test.append(tests_ds[i,32])
+    y_training = training_ds[:,32]
+    y_test = tests_ds[:,32]
     x = np.delete(x,32,1)       #Matriz x (entradas) es 194*32  (vector y eliminado de x)
     training_ds = np.delete(training_ds,32,1)
     tests_ds = np.delete(tests_ds,32,1)
