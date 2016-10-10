@@ -80,7 +80,9 @@ def main():
     iterat = 400
     [theta,J] = gradientDescent(training_ds,y_training,theta,alpha,iterat)
     theta2=Pseudoinverse(training_ds,y_training)
-
+    print(tests_ds.shape)
+    print ("Thetas calculados por el metodo de Gradiente Descendiente: \n", theta)
+    print ("Thetas calculados por el metodo de la Pseudoinversa: \n",theta2)
     plt.plot(J)
     plt.ylabel('Cost J')
     plt.xlabel('Number of Iterations')
