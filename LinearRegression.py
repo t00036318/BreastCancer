@@ -1,22 +1,20 @@
 import numpy as np
 import random
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 def featureNormalize(X):
 
     [m,n] = X.shape
-    i=0
-    j=0
-    mean =[]
-    std = []
-    for j in range(n):
-        mean.append(0.0)
-        for i in range(m):
-            mean[j]+=X[i,j]
-        mean[j]/=m
-        std.append(np.amax(X[:,j])-np.amin(X[:,j]))
-        for k in range(m):
-            X[k,j]=(X[k,j]-mean[j])/std[j]
-    return X
+
+    mean = X.mean(0)
+    std = np.amax(X, axis= 0) - np.amin(X, axis= 0)
+
+    X = (X-mean)/std
+
+    return [X,mean,std]
+
+def testNormalize(Xt,mean,sigma):
+    Xt = (Xt-mean)/sigma
+    return (Xt)
 
 def computeCost(X,y,theta):
     [m,n]= y.shape
@@ -72,7 +70,9 @@ def main():
     x = np.delete(x,32,1)       #Matriz x (entradas) es 194*32  (vector y eliminado de x)
     training_ds = np.delete(training_ds,32,1)
     tests_ds = np.delete(tests_ds,32,1)
-    training_ds=featureNormalize(training_ds) #Normalizar datos del conjunto de entrenamiento
+    [training_ds,mean,sigma]=featureNormalize(training_ds) #Normalizar datos del conjunto de entrenamiento
+    print (tests_ds)
+    tests_ds = testNormalize(tests_ds,mean,sigma)
     training_ds=np.concatenate((np.ones((116,1)),training_ds),axis=1)
     tests_ds = np.concatenate((np.ones((78,1)),tests_ds),axis=1)
     theta = np.zeros((33,1))
@@ -80,13 +80,16 @@ def main():
     iterat = 400
     [theta,J] = gradientDescent(training_ds,y_training,theta,alpha,iterat)
     theta2=Pseudoinverse(training_ds,y_training)
-    print(tests_ds.shape)
-    print ("Thetas calculados por el metodo de Gradiente Descendiente: \n", theta)
-    print ("Thetas calculados por el metodo de la Pseudoinversa: \n",theta2)
-    plt.plot(J)
+    #print ("Thetas calculados por el metodo de Gradiente Descendiente: \n", theta)
+    print (tests_ds[1])
+    print (tests_ds*theta)
+    #print ("Thetas calculados por el metodo de la Pseudoinversa: \n",theta2)
+    print("holi")
+    print (tests_ds*theta2)
+    """plt.plot(J)
     plt.ylabel('Cost J')
     plt.xlabel('Number of Iterations')
-    plt.show()
+    plt.show()"""
 
 
 main()
