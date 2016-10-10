@@ -31,18 +31,22 @@ def gradientDescent (X, y, theta, alpha, num_iters):
         for j in range (116):
             h = np.dot(X[j,:],theta)
             #print (h)
-            error = h-y[j]
+            error = h-y[j,0]
         error/=116
 
 
     return [theta,J_histor]
 
 
-def pseudoinverse(X):                            #Función que calcula la pseudoinversa de una matriz
+def Pseudoinverse(X):                            #Función que calcula la pseudoinversa de una matriz
     Xt = np.transpose(X)
-    Xinv = np.linalg.inv(X.dot(Xt))
-    Xplus = Xinv.dot(X)
+    Xinv = np.linalg.inv(Xt.dot(X))
+    Xplus = Xinv.dot(Xt)
     return Xplus
+
+def Theta(Xplus, Y):                                 #Función que calcular el vector theta
+    th = Xplus.dot(Y)
+    return th
 
 
 def main():
@@ -70,12 +74,18 @@ def main():
     y_training = []
     y_test =[]
     for i in range(116):
-        y_training.append(x_training[i,32])       #Matriz y de entrenamiento
+        y_training.append(x_training[i,32])
+    y_training = np.transpose(np.matrix(y_training))        #Vector columna y de entrenamiento
     for i in range(78):
         y_test.append(x_test[i,32])               #Matriz y de pruebas
 
     x_training = np.delete(x_training,32,1)       #Matriz x de entrenamiento
     x_test = np.delete(x_test,32,1)               #Matriz x de pruebas
+
+    Xp = Pseudoinverse(x_training)                #Pseudoinversa de x
+    th = Theta(Xp, y_training)                    #Vector theta
+    print(th.shape)
+
 
 
     x_training = featureNormalize(x_training)    #Normalizar datos del conjunto de entrenamiento
