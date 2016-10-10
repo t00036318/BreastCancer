@@ -27,6 +27,8 @@ def gradientDescent (X, y, theta, alpha, num_iters):
     for i in range (num_iters):
         h = X*theta
         error=h-y
+        theta_temp = np.transpose(((alpha/m)*(np.transpose(error)*X)))
+        theta = theta-theta_temp
     return [theta_temp,J_histor]
 
 
