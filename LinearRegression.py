@@ -40,6 +40,13 @@ def Pseudoinverse(X,Y):                            #Función que calcula la pseu
     th = Xplus.dot(Y)
     return th
 
+def MAPE(y,h):
+    [m,n]=y.shape
+    error=(y-h)/y
+    error=np.abs(error)
+    error=100/m*np.sum(error)
+    return error
+
 def main():
 
     f = open('ENB2012.csv', 'r')
@@ -79,21 +86,26 @@ def main():
     tests_ds = testNormalize(tests_ds,mean,sigma)
     training_ds=np.concatenate((np.ones((round((m*0.6)),1)),training_ds),axis=1)
     tests_ds = np.concatenate((np.ones(((m-round((m*0.6))),1)),tests_ds),axis=1)
-    [m,n] = x.shape
-    thetaG_y1 = np.zeros((n+1,1))
-    thetaN_y1 = np.zeros((n+1,1))
-    thetaG_y2 = np.zeros((n+1,1))
-    thetaN_y2 = np.zeros((n+1,1))
+    thetaG_y1 = np.zeros((n-1,1))
+    thetaN_y1 = np.zeros((n-1,1))
+    thetaG_y2 = np.zeros((n-1,1))
+    thetaN_y2 = np.zeros((n-1,1))
     alpha = 0.09
     iterat = 400
     [thetaG_y1,J] = gradientDescent(training_ds,y_training,thetaG_y1,alpha,iterat)
     [thetaG_y2,J2] = gradientDescent(training_ds,y_training2,thetaG_y2,alpha,iterat)
     thetaN_y1 = Pseudoinverse(training_ds,y_training)
     thetaN_y2 = Pseudoinverse(training_ds,y_training2)
+    '''
     print ("Thetas calculados por el metodo de Gradiente Descendiente para Heating load: \n", thetaG_y1)
     print ("Thetas calculados por el metodo de Gradiente Descendiente para Cooling load: \n", thetaG_y2)
     print ("Thetas calculados por el metodo de la Pseudoinversa para Heating load: \n",thetaN_y1)
     print ("Thetas calculados por el metodo de la Pseudoinversa para Cooling load: \n",thetaN_y2)
+    '''
+    errorG_y1=MAPE(y_test,tests_ds*thetaG_y1)
+    errorG_y2=MAPE(y_test2,tests_ds*thetaG_y2)
+    errorN_y1=MAPE(y_test,tests_ds*thetaN_y1)
+    errorN_y2=MAPE(y_test2,tests_ds*thetaN_y2)
     plt.plot(J)
     plt.ylabel('Cost J')
     plt.xlabel('Number of Iterations')
