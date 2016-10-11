@@ -106,14 +106,18 @@ def main():
     errorG_y2=MAPE(y_test2,tests_ds*thetaG_y2)
     errorN_y1=MAPE(y_test,tests_ds*thetaN_y1)
     errorN_y2=MAPE(y_test2,tests_ds*thetaN_y2)
+    plt.figure(1)
+    plt.ylabel('Cost J')
+    plt.xlabel('Number of Iterations')
+    plt.title('Cambio de la funcion de costo Heating Load')
     plt.plot(J)
+    plt.figure (2)
     plt.ylabel('Cost J')
     plt.xlabel('Number of Iterations')
-    plt.show()
+    plt.title('Cambio de la funcion de costo Cooling Load')
     plt.plot(J2)
-    plt.ylabel('Cost J')
-    plt.xlabel('Number of Iterations')
     plt.show()
+
 
 
 main()
