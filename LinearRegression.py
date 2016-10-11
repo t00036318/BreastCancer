@@ -97,8 +97,8 @@ def main():
     thetaN_y1 = Pseudoinverse(training_ds,y_training)
     thetaN_y2 = Pseudoinverse(training_ds,y_training2)
     '''
-    print ("Thetas calculados por el metodo de Gradiente Descendiente para Heating load: \n", thetaG_y1)
-    print ("Thetas calculados por el metodo de Gradiente Descendiente para Cooling load: \n", thetaG_y2)
+    print ("Thetas calculados por el metodo de Gradiente Descendente para Heating load: \n", thetaG_y1)
+    print ("Thetas calculados por el metodo de Gradiente Descendente para Cooling load: \n", thetaG_y2)
     print ("Thetas calculados por el metodo de la Pseudoinversa para Heating load: \n",thetaN_y1)
     print ("Thetas calculados por el metodo de la Pseudoinversa para Cooling load: \n",thetaN_y2)
     '''
@@ -117,9 +117,9 @@ def main():
     plt.title('Cambio de la funcion de costo Cooling Load')
     plt.plot(J2)
     plt.show()
-    print("Error de las predicciones con Gradiente Descendiente para y1 (Heating Load)",errorG_y1)
+    print("Error de las predicciones con Gradiente Descendente para y1 (Heating Load)",errorG_y1)
     print("Error de las predicciones con Metodo de la Pseudoinversa para y1 (Heating Load)",errorN_y1)
-    print("Error de las predicciones con Gradiente Descendiente para y2 (Cooling Load)",errorG_y2)
+    print("Error de las predicciones con Gradiente Descendente para y2 (Cooling Load)",errorG_y2)
     print("Error de las predicciones con Metodo de la Pseudoinversa para y1 (Cooling Load)",errorN_y2)
 
 main()
